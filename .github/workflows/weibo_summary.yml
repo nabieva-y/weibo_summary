@@ -1,0 +1,31 @@
+name: Weibo Summary Mailer
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 时间 00:00 运行
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+
+      - name: 设置 Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: 安装依赖
+        run: |
+          pip install weibo-crawler openai yagmail
+
+      - name: 运行脚本
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+        run: |
+          python weibo_summary_mailer.py
