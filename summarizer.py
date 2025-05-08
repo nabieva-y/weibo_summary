@@ -2,7 +2,11 @@ import openai
 import os
 
 # 建议使用默认客户端初始化方法（新写法）
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization="org-VkZyew7Umepy4xud9hHOwMVk"  # ← 用你上一步复制的那个替换这里
+)
 
 def summarize_weibo_posts(posts):
     if not posts:
