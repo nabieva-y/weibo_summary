@@ -48,6 +48,8 @@
 # weibo_summary_mailer.py
 import os
 
+from weibo_fetcher import fetch_weibo_posts
+
 def fake_fetch_weibo():
     return [
         "人生就是一场修行。",
@@ -78,7 +80,9 @@ def send_email(summary):
 
 
 if __name__ == "__main__":
-    posts = fake_fetch_weibo()
+    posts = fetch_weibo_posts("7216135028", max_count=3)
+    for i, post in enumerate(posts, 1):
+        print(f"[{i}] {post}")
     summary = summarize(posts)
     print("📝 生成总结：", summary)
     send_email(summary)
