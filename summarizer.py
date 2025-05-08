@@ -1,4 +1,4 @@
-import openai
+from openai import OpenAI 
 import os
 
 # 建议使用默认客户端初始化方法（新写法）
