@@ -63,6 +63,8 @@ def send_email(summary):
     user = os.getenv("EMAIL_USER")
     pwd = os.getenv("EMAIL_PASSWORD")
     to = os.getenv("EMAIL_RECEIVER")
+    print(f"使用邮箱账户: {user}")
+    print(f"目标收件人: {to}")
 
     yag = yagmail.SMTP(user=user, password=pwd)
     yag.send(to=to, subject="微博周报：包容万物恒河水", contents=summary)
