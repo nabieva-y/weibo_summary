@@ -1,4 +1,3 @@
-weibo-crawler
+requests
 openai
 yagmail
-schedule
