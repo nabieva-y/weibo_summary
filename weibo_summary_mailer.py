@@ -59,16 +59,23 @@ def summarize(posts):
     return "包容万物恒河水本周发布了 {} 条微博，内容涵盖：修行、包容、哲理等主题。".format(len(posts))
 
 def send_email(summary):
+    import os
     import yagmail
-    user = os.getenv("EMAIL_USER")
-    pwd = os.getenv("EMAIL_PASSWORD")
-    to = os.getenv("EMAIL_RECEIVER")
-    print(f"使用邮箱账户: {user}")
-    print(f"目标收件人: {to}")
 
-    yag = yagmail.SMTP(user=user, password=pwd)
+    user = os.getenv("EMAIL_USER")
+    password = os.getenv("EMAIL_PASSWORD")
+    to = os.getenv("EMAIL_RECEIVER")
+
+    yag = yagmail.SMTP(
+        user=user,
+        password=password,
+        host="smtp.qq.com",
+        port=465,
+        smtp_ssl=True
+    )
     yag.send(to=to, subject="微博周报：包容万物恒河水", contents=summary)
     print("📬 邮件已发送成功")
+
 
 if __name__ == "__main__":
     posts = fake_fetch_weibo()
