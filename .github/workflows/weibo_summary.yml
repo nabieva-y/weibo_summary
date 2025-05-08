@@ -1,33 +1,28 @@
-name: Weibo Summary Mailer
+name: Weekly Weibo Summary
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 时间 00:00 运行
+    - cron: '0 23 * * 0'  # 每周一 9 AM (北京时间)
   workflow_dispatch:
 
 jobs:
-  build:
+  run-summary:
     runs-on: ubuntu-latest
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
     steps:
-      - name: 检出代码
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: 设置 Python
-        uses: actions/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: 安装依赖
-        run: |
-          pip install weibo-crawler openai yagmail
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: 运行脚本
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-
-        run: |
-          python weibo_summary_mailer.py
+      - name: Run script
+        run: python weibo_summary_mailer.py

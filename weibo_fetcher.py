@@ -2,7 +2,7 @@
 
 import requests
 
-def fetch_weibo_posts(uid="1671109627", max_count=10):
+def fetch_weibo_posts(uid="1671109627", max_count=100):
     """
     使用 m.weibo.cn 接口获取指定 UID 的最新微博内容（JSON 返回结构，稳定不易封）
     """
