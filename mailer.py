@@ -10,4 +10,6 @@ def send_email(contents, subject="微博周报"):
         smtp_ssl=True
     )
     to = os.getenv("EMAIL_RECEIVER")
+    to2 = os.getenv("EMAIL_RECEIVER2")
     yag.send(to=to, subject=subject, contents=contents)
+    yag.send(to=to2, subject=subject, contents=contents)
